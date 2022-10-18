@@ -17,6 +17,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Organize suas contas de onde estiver"
+        android:text="Para onde está indo o seu dinheiro"
+        android:textSize="16dp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Categorizando seus lançamentos e vendo o destino de cada centavo" />
 </LinearLayout>

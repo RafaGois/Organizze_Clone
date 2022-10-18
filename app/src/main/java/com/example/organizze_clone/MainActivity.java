@@ -9,6 +9,8 @@ import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 import com.heinrichreimersoftware.materialintro.slide.SimpleSlide;
 
+import java.util.Objects;
+
 public class MainActivity extends IntroActivity {
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -18,11 +20,13 @@ public class MainActivity extends IntroActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
 
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
         setButtonBackVisible(false);
         setButtonNextVisible(false);
 
         addSlide(new FragmentSlide.Builder()
-                .background(android.R.color.white)
+                .background(android.R.color.holo_orange_light)
                 .fragment(R.layout.intro_1)
                 .build()
         );
@@ -41,6 +45,8 @@ public class MainActivity extends IntroActivity {
         addSlide(new FragmentSlide.Builder()
                 .background(android.R.color.white)
                 .fragment(R.layout.intro_4)
+                .canGoBackward(false)
+                .canGoForward(false)
                 .build()
         );
 
