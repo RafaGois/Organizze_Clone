@@ -1,4 +1,4 @@
-package com.example.organizze_clone.activity;
+package com.example.organizze_clone.activitys;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +19,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -93,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void abrirTelaPrincipal () {
-        //Intent intent = new Intent(this,PrincipalActivity.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this,Principal.class);
+        startActivity(intent);
     }
 }

@@ -1,17 +1,14 @@
 package com.example.organizze_clone;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.organizze_clone.activity.LoginActivity;
-import com.example.organizze_clone.activity.RegisterActivity;
+import com.example.organizze_clone.activitys.LoginActivity;
+import com.example.organizze_clone.activitys.RegisterActivity;
 import com.google.firebase.database.FirebaseDatabase;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
-import com.heinrichreimersoftware.materialintro.slide.SimpleSlide;
 
 import java.util.Objects;
 

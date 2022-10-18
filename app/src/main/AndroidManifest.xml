@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Organizze_Clone"
         tools:targetApi="31">
         <activity
-            android:name=".PrincipalActivity"
+            android:name=".activitys.Principal"
             android:exported="false"
             android:label="@string/title_activity_principal"
             android:theme="@style/Theme.Organizze_Clone.NoActionBar">
@@ -22,14 +22,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".activitys.RegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activitys.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
