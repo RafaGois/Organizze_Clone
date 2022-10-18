@@ -2,9 +2,12 @@ package com.example.organizze_clone;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.organizze_clone.activity.LoginActivity;
+import com.example.organizze_clone.activity.RegisterActivity;
 import com.google.firebase.database.FirebaseDatabase;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
@@ -94,10 +97,13 @@ public class MainActivity extends IntroActivity {
     }
 
     public void btnEntrar (View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
 
     }
 
     public void btnCadastrar (View view) {
-
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 }
