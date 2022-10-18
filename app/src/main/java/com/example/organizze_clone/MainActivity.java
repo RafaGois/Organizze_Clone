@@ -3,6 +3,7 @@ package com.example.organizze_clone;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
@@ -45,6 +46,12 @@ public class MainActivity extends IntroActivity {
         addSlide(new FragmentSlide.Builder()
                 .background(android.R.color.white)
                 .fragment(R.layout.intro_4)
+                .build()
+        );
+
+        addSlide(new FragmentSlide.Builder()
+                .background(android.R.color.white)
+                .fragment(R.layout.intro_cadastro)
                 .canGoBackward(false)
                 .canGoForward(false)
                 .build()
@@ -83,6 +90,14 @@ public class MainActivity extends IntroActivity {
                 .build());
 
  */
+
+    }
+
+    public void btnEntrar (View view) {
+
+    }
+
+    public void btnCadastrar (View view) {
 
     }
 }
