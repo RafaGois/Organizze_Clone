@@ -1,5 +1,6 @@
 package com.example.organizze_clone.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -14,11 +15,19 @@ import android.widget.Toast;
 
 import com.example.organizze_clone.R;
 import com.example.organizze_clone.config.ConfiguracaoFirebase;
+import com.example.organizze_clone.model.Usuario;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class RegisterActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
+    private Usuario usuario;
 
     private EditText inputNome, inputEmail, inputSenha;
     private Button btnCadastro;
@@ -45,7 +54,13 @@ public class RegisterActivity extends AppCompatActivity {
                 if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "Informe todos os valores", Toast.LENGTH_SHORT).show();
                 } else {
-                    cadastrarUsuario(email,senha);
+
+                    usuario = new Usuario();
+                    usuario.setNome(nome);
+                    usuario.setEmail(email);
+                    usuario.setSenha(senha);
+
+                    cadastrarUsuario();
                 }
 
             }
@@ -78,10 +93,35 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
     
-    public void cadastrarUsuario (String email, String senha) {
+    public void cadastrarUsuario () {
 
         auth = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        auth.createUserWithEmailAndPassword(email, senha);
+        auth.createUserWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                //todo mudar para snackbar
+                if (task.isSuccessful()) {
+                    Toast.makeText(RegisterActivity.this, "Sucesso!", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    String exception = "";
+                    try {
+                        throw task.getException();
+                    } catch ( FirebaseAuthWeakPasswordException e) {
+                        exception = "Digite uma senha mais forte";
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        exception = "Email inválido";
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        exception = "Conta já cadastrada";
+                    } catch (Exception e) {
+                        exception = "erro";
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(RegisterActivity.this, "Erro! " + exception, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 }
