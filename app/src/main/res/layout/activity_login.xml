@@ -50,7 +50,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:text="Entrar"
         android:backgroundTint="@color/azul_botao"
-        />
+        android:text="Entrar"
+        android:textColor="@color/white" />
 </LinearLayout>
