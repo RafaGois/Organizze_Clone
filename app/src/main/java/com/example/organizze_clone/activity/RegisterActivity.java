@@ -23,8 +23,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText inputNome, inputEmail, inputSenha;
     private Button btnCadastro;
 
-    //todo ao clicar om enter no senha esconder teclado
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
