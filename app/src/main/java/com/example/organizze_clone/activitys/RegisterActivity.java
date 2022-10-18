@@ -100,7 +100,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 //todo mudar para snackbar
                 if (task.isSuccessful()) {
-                    Toast.makeText(RegisterActivity.this, "Sucesso!", Toast.LENGTH_SHORT).show();
+
+                    finish();
+
                 } else {
 
                     String exception = "";
@@ -116,11 +118,9 @@ public class RegisterActivity extends AppCompatActivity {
                         exception = "erro";
                         e.printStackTrace();
                     }
-
                     Toast.makeText(RegisterActivity.this, "Erro! " + exception, Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
     }
 }
