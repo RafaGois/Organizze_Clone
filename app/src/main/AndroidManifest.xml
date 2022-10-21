@@ -13,17 +13,24 @@
         android:theme="@style/Theme.Organizze_Clone"
         tools:targetApi="31">
         <activity
-            android:name=".activitys.PrincipalActivity"
-            android:exported="false">
+            android:name=".activitys.Despesa"
+            android:exported="false"
+            android:theme="@style/Theme.Despesa">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activitys.Principal"
+            android:name=".activitys.Receita"
             android:exported="false"
-            android:label="@string/title_activity_principal"
-            android:theme="@style/Theme.Organizze_Clone.NoActionBar">
+            android:theme="@style/Theme.Receita">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activitys.PrincipalActivity"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

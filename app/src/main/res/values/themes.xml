@@ -14,6 +14,36 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.Despesa" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/vermelho_principal_receita</item>
+        <item name="colorPrimaryVariant">@color/vermelho_receita</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/vermelho_receita</item>
+        <item name="colorSecondaryVariant">@color/vermelho_secundario_receita</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/vermelho_receita</item>
+    </style>
+
+    <style name="Theme.Receita" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/verde_receita</item>
+        <item name="colorPrimaryVariant">@color/verde_principal_receita</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/verde_principal_receita</item>
+        <item name="colorSecondaryVariant">@color/verde_secundario_receita</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/verde_receita</item>
+    </style>
+
     <style name="Theme.Organizze_Clone.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

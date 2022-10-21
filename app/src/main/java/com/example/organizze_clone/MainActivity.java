@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.organizze_clone.activitys.LoginActivity;
-import com.example.organizze_clone.activitys.Principal;
 import com.example.organizze_clone.activitys.PrincipalActivity;
 import com.example.organizze_clone.activitys.RegisterActivity;
 import com.example.organizze_clone.config.ConfiguracaoFirebase;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 
