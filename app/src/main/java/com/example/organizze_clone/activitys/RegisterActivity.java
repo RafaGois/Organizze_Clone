@@ -61,12 +61,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                     cadastrarUsuario();
                 }
-
             }
         });
 
         hideKeyboard();
-
     }
 
     private void hideKeyboard () {
@@ -87,9 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
     }
     
     public void cadastrarUsuario () {
