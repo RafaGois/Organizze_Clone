@@ -83,6 +83,8 @@ public class MainActivity extends IntroActivity {
     public void isUserLogado () {
         auth = ConfiguracaoFirebase.getFirebaseAutenticacao();
 
+        //auth.signOut();
+
         if (auth.getCurrentUser() != null) {
              abrirTelaPrincipal();
         }
@@ -91,9 +93,5 @@ public class MainActivity extends IntroActivity {
     private void abrirTelaPrincipal () {
         Intent intent = new Intent(this, PrincipalActivity.class);
         startActivity(intent);
-    }
-
-    private void fab () {
-
     }
 }

@@ -1,12 +1,26 @@
 package com.example.organizze_clone.model;
 
+import com.example.organizze_clone.config.ConfiguracaoFirebase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+
 public class Usuario {
 
+    private String idUsuario;
     private String nome;
     private String email;
     private String senha;
 
     public Usuario() {
+    }
+
+    public void salvar () {
+        DatabaseReference firebase = ConfiguracaoFirebase.getFirebase();
+        firebase.child("usuarios")
+                .child(this.idUsuario)
+                .setValue(this);
+
+
     }
 
     public String getNome() {
@@ -25,11 +39,22 @@ public class Usuario {
         this.email = email;
     }
 
+    //o exclude serve para que o firebase nao leve esses dados para os servidor
+    @Exclude
     public String getSenha() {
         return senha;
     }
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    @Exclude
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }

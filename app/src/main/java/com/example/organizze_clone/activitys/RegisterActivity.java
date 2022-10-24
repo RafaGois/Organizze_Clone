@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.organizze_clone.R;
 import com.example.organizze_clone.config.ConfiguracaoFirebase;
+import com.example.organizze_clone.helper.Base64Custom;
 import com.example.organizze_clone.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -95,6 +96,10 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 //todo mudar para snackbar
                 if (task.isSuccessful()) {
+
+                    String idUsuario = Base64Custom.codificarBase64(usuario.getEmail());
+                    usuario.setIdUsuario(idUsuario);
+                    usuario.salvar();
 
                     finish();
 
