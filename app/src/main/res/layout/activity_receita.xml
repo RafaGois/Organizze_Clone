@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/inputValor"
+            android:id="@+id/inputValorReceita"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -49,9 +49,10 @@
             android:layout_marginBottom="15dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputDataReceita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ex: 20/11/2022" />
+                android:hint="Data" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -60,9 +61,10 @@
             android:layout_marginBottom="15dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputCategoriaReceita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ex: Salário" />
+                android:hint="Categoria" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -70,14 +72,15 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputDataReceita"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ex: Salário Mensal" />
+                android:hint="Descrição" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabSalvar"
+        android:id="@+id/fabSalvarReceita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"

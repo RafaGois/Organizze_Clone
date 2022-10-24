@@ -19,7 +19,7 @@ tools:context=".activitys.Despesa">
     app:layout_constraintTop_toTopOf="parent">
 
     <EditText
-        android:id="@+id/inputValor"
+        android:id="@+id/inputValorReceita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -64,7 +64,7 @@ tools:context=".activitys.Despesa">
             android:id="@+id/inputCategoria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Salário" />
+            android:hint="Categoria" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -79,16 +79,17 @@ tools:context=".activitys.Despesa">
     </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>
 
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/fabSalvar"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    android:clickable="true"
-    app:backgroundTint="@color/vermelho_secundario_receita"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:srcCompat="@drawable/ic_baseline_check_24" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabSalvarReceita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:onClick="salvarDespesa"
+        app:backgroundTint="@color/vermelho_secundario_receita"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_check_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
