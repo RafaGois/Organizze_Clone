@@ -91,6 +91,8 @@ public class Receita extends AppCompatActivity {
 
 
             movimentacao.salvar(data);
+
+            finish();
         }
     }
 

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    tools:context=".activitys.PrincipalActivity">
+
+
+
+
+
+    <include layout="@layout/content_principal" />
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="10dp"
+        fab:menu_icon="@drawable/ic_add_white"
+        app:menu_colorNormal="@color/azul_botao"
+        app:menu_colorPressed="@color/teal_700"
+        >
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_despesa"
+            android:onClick="adicionarDespesa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_attach_money_24"
+            fab:fab_colorNormal="@color/vermelho_principal_receita"
+            app:fab_colorPressed="@color/verde_principal_receita"
+            fab:fab_label="Despesa"
+            fab:fab_size="mini"
+            />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_receita"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="adicionarReceita"
+            android:src="@drawable/ic_baseline_arrow_downward_24"
+            app:fab_colorNormal="@color/verde_principal_receita"
+            app:fab_colorPressed="@color/vermelho_principal_receita"
+            fab:fab_label="Receita"
+            fab:fab_size="mini" />
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
