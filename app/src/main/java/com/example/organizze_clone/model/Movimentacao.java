@@ -64,7 +64,7 @@ public class Movimentacao {
 
         String mesAno = DateCustom.mesAnoDataEscolhida(dataEscolhida);
 
-        DatabaseReference reference = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference reference = ConfiguracaoFirebase.getFirebaseDatabase();
         reference.child("movimetacao")
                 .child( idUser )
                 .child( mesAno )

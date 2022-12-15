@@ -1,7 +1,5 @@
 package com.example.organizze_clone.config;
 
-import android.text.PrecomputedText;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -20,7 +18,7 @@ public class ConfiguracaoFirebase {
         }
     }
 
-    public static DatabaseReference getFirebase() {
+    public static DatabaseReference getFirebaseDatabase() {
         if (firebase == null) {
             firebase = FirebaseDatabase.getInstance().getReference();
         }

@@ -26,7 +26,7 @@ public class Receita extends AppCompatActivity {
     private TextInputEditText inputData, inputCategoria, inputDescricao;
     private EditText inputValor;
     private Movimentacao movimentacao;
-    private DatabaseReference fireBaseRef = ConfiguracaoFirebase.getFirebase();
+    private DatabaseReference fireBaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
     private FirebaseAuth auth = ConfiguracaoFirebase.getFirebaseAutenticacao();
     private double receitaTotal;
 

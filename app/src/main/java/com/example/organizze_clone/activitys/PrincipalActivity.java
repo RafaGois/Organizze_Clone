@@ -7,7 +7,6 @@ import com.example.organizze_clone.MainActivity;
 import com.example.organizze_clone.R;
 import com.example.organizze_clone.adapter.AdapterMovimentacao;
 import com.example.organizze_clone.config.ConfiguracaoFirebase;
-import com.example.organizze_clone.databinding.ActivityPrincipalBinding;
 import com.example.organizze_clone.helper.Base64Custom;
 import com.example.organizze_clone.model.Movimentacao;
 import com.example.organizze_clone.model.Usuario;
@@ -22,6 +21,7 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,96 +30,125 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class PrincipalActivity extends AppCompatActivity {
 
     private MaterialCalendarView calendarView;
-
-    private TextView txtSaudacao, txtSaldo;
-    private RecyclerView recyclerView;
-    private AdapterMovimentacao adapterMovimentacao;
-
+    private TextView textoSaudacao, textoSaldo;
     private Double despesaTotal = 0.0;
     private Double receitaTotal = 0.0;
     private Double resumoUsuario = 0.0;
 
-    private List<Movimentacao> movimentacoes;
-    private DatabaseReference databaseRef ;
+    private FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+    private DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
+    private DatabaseReference usuarioRef;
+    private ValueEventListener valueEventListenerUsuario;
+    private ValueEventListener valueEventListenerMovimentacoes;
 
-    private DatabaseReference fireBaseRef = ConfiguracaoFirebase.getFirebase();
-    private FirebaseAuth auth = ConfiguracaoFirebase.getFirebaseAutenticacao();
-    private DatabaseReference userRef;
-    private ValueEventListener valueEventListener;
+    private RecyclerView recyclerView;
+    private AdapterMovimentacao adapterMovimentacao;
+    private List<Movimentacao> movimentacoes = new ArrayList<>();
+    private DatabaseReference movimentacaoRef;
+    private String mesAnoSelecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_principal);
 
-        txtSaudacao = findViewById(R.id.textSaudacao);
-        txtSaldo = findViewById(R.id.textSaldo);
+        textoSaldo = findViewById(R.id.textSaldo);
+        textoSaudacao = findViewById(R.id.textSaudacao);
         calendarView = findViewById(R.id.calendarView);
         recyclerView = findViewById(R.id.recyclerMovimentos);
         configuraCalendarView();
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager( layoutManager );
-        recyclerView.setHasFixedSize( true );
+        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setTitle("");
 
+        //Configurar adapter
         adapterMovimentacao = new AdapterMovimentacao(movimentacoes,this);
 
-        recyclerView.setAdapter(adapterMovimentacao);
+        //Configurar RecyclerView
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager( layoutManager );
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter( adapterMovimentacao );
+
+
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        recuperarResumo();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_principal,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.menu_sair:
-                auth.signOut();
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void recuperarMovimentacaoes () {
-
-        databaseRef.child("movimentacao");
-    }
-
-    private void recuperarResumo() {
-
-        String emailUser =  auth.getCurrentUser().getEmail();
-        String idUsuario = Base64Custom.codificarBase64(emailUser);
-        userRef = fireBaseRef.child("usuarios").child( idUsuario );
-
-        valueEventListener = userRef.addValueEventListener(new ValueEventListener() {
+    public void swipe () {
+        ItemTouchHelper.Callback itemTouch = new ItemTouchHelper.Callback() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
 
-                Usuario usuario = snapshot.getValue( Usuario.class);
+                int dragFlags = ItemTouchHelper.ACTION_STATE_IDLE;
+                int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+
+                return makeMovementFlags(dragFlags,swipeFlags);
+            }
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            }
+        };
+
+        new ItemTouchHelper(itemTouch).attachToRecyclerView(recyclerView);
+    }
+
+    public void recuperarMovimentacoes(){
+
+        String emailUsuario = autenticacao.getCurrentUser().getEmail();
+        String idUsuario = Base64Custom.codificarBase64( emailUsuario );
+        movimentacaoRef = firebaseRef.child("movimetacao")
+                .child( idUsuario )
+                .child( mesAnoSelecionado );
+
+        valueEventListenerMovimentacoes = movimentacaoRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                movimentacoes.clear();
+                for (DataSnapshot dados: dataSnapshot.getChildren() ){
+
+                    Movimentacao movimentacao = dados.getValue( Movimentacao.class );
+                    movimentacoes.add( movimentacao );
+
+                }
+
+                adapterMovimentacao.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    public void recuperarResumo(){
+
+        String emailUsuario = autenticacao.getCurrentUser().getEmail();
+        String idUsuario = Base64Custom.codificarBase64( emailUsuario );
+        usuarioRef = firebaseRef.child("usuarios").child( idUsuario );
+
+        valueEventListenerUsuario = usuarioRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Usuario usuario = dataSnapshot.getValue( Usuario.class );
 
                 despesaTotal = usuario.getDespesaTotal();
                 receitaTotal = usuario.getReceitaTotal();
@@ -128,46 +157,80 @@ public class PrincipalActivity extends AppCompatActivity {
                 DecimalFormat decimalFormat = new DecimalFormat("0.##");
                 String resultadoFormatado = decimalFormat.format( resumoUsuario );
 
-                txtSaudacao.setText("Olá " + usuario.getNome());
-                txtSaldo.setText("R$ " + resultadoFormatado);
+                textoSaudacao.setText("Olá, " + usuario.getNome() );
+                textoSaldo.setText( "R$ " + resultadoFormatado );
 
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
 
-
     }
 
-    private void configuraCalendarView() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_sair :
+                autenticacao.signOut();
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void adicionarDespesa(View view){
+        startActivity(new Intent(this, Despesa.class));
+    }
+
+    public void adicionarReceita(View view){
+        startActivity(new Intent(this, Receita.class));
+    }
+
+    public void configuraCalendarView(){
+
+        CharSequence meses[] = {"Janeiro","Fevereiro", "Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"};
+        calendarView.setTitleMonths( meses );
+
+        CalendarDay dataAtual = calendarView.getCurrentDate();
+        String mesSelecionado = String.format("%02d", (dataAtual.getMonth()) );
+        mesAnoSelecionado = String.valueOf( mesSelecionado + "" + dataAtual.getYear() );
 
         calendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
+                String mesSelecionado = String.format("%02d", (date.getMonth()) );
+                mesAnoSelecionado = String.valueOf( mesSelecionado + "" + date.getYear() );
 
+                movimentacaoRef.removeEventListener( valueEventListenerMovimentacoes );
+                recuperarMovimentacoes();
             }
         });
+
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        recuperarResumo();
+        recuperarMovimentacoes();
 
-    public void adicionarReceita (View view) {
-        Intent intent = new Intent(this,Receita.class);
-        startActivity(intent);
-    }
-
-    public void adicionarDespesa (View view) {
-        Intent intent = new Intent(this,Despesa.class);
-        startActivity(intent);
+        swipe();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
-        userRef.removeEventListener( valueEventListener );
-
+        usuarioRef.removeEventListener( valueEventListenerUsuario );
+        movimentacaoRef.removeEventListener( valueEventListenerMovimentacoes );
     }
 }
